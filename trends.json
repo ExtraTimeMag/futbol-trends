@@ -1,0 +1,58 @@
+{
+  "last_updated": "2025-04-10T14:00:00Z",
+  "categorized_trends": {
+    "Global Stars": [
+      {
+        "topic": "Messi assist",
+        "value": 420,
+        "source": "Lionel Messi"
+      },
+      {
+        "topic": "Cristiano Ronaldo hat trick",
+        "value": 395,
+        "source": "Cristiano Ronaldo"
+      }
+    ],
+    "Tournaments": [
+      {
+        "topic": "Copa Am\u00e9rica final",
+        "value": 510,
+        "source": "Copa Am\u00e9rica"
+      },
+      {
+        "topic": "EURO 2024 tickets",
+        "value": 480,
+        "source": "EURO 2024"
+      }
+    ],
+    "Africa": [
+      {
+        "topic": "Al Ahly win",
+        "value": 310,
+        "source": "Al Ahly SC"
+      }
+    ]
+  },
+  "interest_over_time": {
+    "Lionel Messi": [
+      {
+        "date": "2025-04-03T00:00:00",
+        "Lionel Messi": 55
+      },
+      {
+        "date": "2025-04-04T00:00:00",
+        "Lionel Messi": 72
+      }
+    ],
+    "Cristiano Ronaldo": [
+      {
+        "date": "2025-04-03T00:00:00",
+        "Cristiano Ronaldo": 60
+      },
+      {
+        "date": "2025-04-04T00:00:00",
+        "Cristiano Ronaldo": 68
+      }
+    ]
+  }
+}
