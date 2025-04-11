@@ -2,146 +2,77 @@ from pytrends.request import TrendReq
 import pandas as pd
 import json
 from datetime import datetime
+import time
 
-# Initialize pytrends
 pytrends = TrendReq(hl='en-US', tz=0)
 
-# Keywords grouped by category
-keyword_categories = {
-    # 🌍 Global Stars
-    "Lionel Messi": "Global Stars",
-    "Cristiano Ronaldo": "Global Stars",
-    "Kylian Mbappé": "Global Stars",
-    "Erling Haaland": "Global Stars",
-    "Mohamed Salah": "Global Stars",
-    "Vinícius Jr": "Global Stars",
-    "Neymar": "Global Stars",
-    "Jude Bellingham": "Global Stars",
-    "Heung-Min Son": "Global Stars",
+# Full keyword list
+keywords = [
+    "Lionel Messi", "Cristiano Ronaldo", "Kylian Mbappé", "Erling Haaland",
+    "Mohamed Salah", "Vinícius Jr", "Neymar", "Jude Bellingham", "Heung-Min Son",
+    "UEFA Champions League", "Europa League", "Conference League", "EURO 2024",
+    "FIFA World Cup", "Women's World Cup", "Club World Cup", "Copa América", "AFCON",
+    "Asian Cup", "Gold Cup", "Copa Libertadores", "Copa Sudamericana",
+    "Real Madrid", "FC Barcelona", "Manchester United", "Manchester City", "Liverpool FC",
+    "Arsenal", "Bayern Munich", "Juventus", "Inter Milan", "Paris Saint-Germain",
+    "Premier League", "La Liga", "Serie A", "Bundesliga", "Ligue 1", "Eredivisie",
+    "MLS", "Liga MX", "Boca Juniors", "River Plate", "Flamengo", "Corinthians",
+    "Palmeiras", "Club América", "Seattle Sounders", "Atlanta United",
+    "Al Ahly SC", "Zamalek SC", "Wydad Casablanca", "Esperance de Tunis", "Mamelodi Sundowns",
+    "TP Mazembe", "CAF Champions League", "Al Hilal", "Al Nassr", "Urawa Red Diamonds",
+    "Kawasaki Frontale", "Melbourne Victory", "J1 League", "K League", "Indian Super League",
+    "Turkish Süper Lig", "Saudi Pro League", "Egypt Cup", "FA Cup", "Copa del Rey", "DFB Pokal",
+    "US Open Cup", "Campeonato Brasileiro Série A", "MTN8", "King's Cup", "AFC Champions League"
+]
 
-    # 🏆 Major Tournaments
-    "UEFA Champions League": "Tournaments",
-    "Europa League": "Tournaments",
-    "Conference League": "Tournaments",
-    "EURO 2024": "Tournaments",
-    "FIFA World Cup": "Tournaments",
-    "Women's World Cup": "Tournaments",
-    "Club World Cup": "Tournaments",
-    "Copa América": "Tournaments",
-    "AFCON": "Tournaments",
-    "Asian Cup": "Tournaments",
-    "Gold Cup": "Tournaments",
-    "Copa Libertadores": "Tournaments",
-    "Copa Sudamericana": "Tournaments",
-
-    # 🇪🇺 European Clubs & Leagues
-    "Real Madrid": "Europe",
-    "FC Barcelona": "Europe",
-    "Manchester United": "Europe",
-    "Manchester City": "Europe",
-    "Liverpool FC": "Europe",
-    "Arsenal": "Europe",
-    "Bayern Munich": "Europe",
-    "Juventus": "Europe",
-    "Inter Milan": "Europe",
-    "Paris Saint-Germain": "Europe",
-    "Premier League": "Europe",
-    "La Liga": "Europe",
-    "Serie A": "Europe",
-    "Bundesliga": "Europe",
-    "Ligue 1": "Europe",
-    "Eredivisie": "Europe",
-
-    # 🌎 Americas
-    "MLS": "Americas",
-    "Liga MX": "Americas",
-    "Boca Juniors": "Americas",
-    "River Plate": "Americas",
-    "Flamengo": "Americas",
-    "Corinthians": "Americas",
-    "Palmeiras": "Americas",
-    "Club América": "Americas",
-    "Seattle Sounders": "Americas",
-    "Atlanta United": "Americas",
-
-    # 🌍 Africa
-    "Al Ahly SC": "Africa",
-    "Zamalek SC": "Africa",
-    "Wydad Casablanca": "Africa",
-    "Esperance de Tunis": "Africa",
-    "Mamelodi Sundowns": "Africa",
-    "TP Mazembe": "Africa",
-    "CAF Champions League": "Africa",
-
-    # 🌏 Asia & Oceania
-    "Al Hilal": "Asia",
-    "Al Nassr": "Asia",
-    "Urawa Red Diamonds": "Asia",
-    "Kawasaki Frontale": "Asia",
-    "Melbourne Victory": "Asia",
-    "J1 League": "Asia",
-    "K League": "Asia",
-    "Indian Super League": "Asia",
-
-    # 🏟 Other Leagues & Cups
-    "Turkish Süper Lig": "Other Leagues",
-    "Saudi Pro League": "Other Leagues",
-    "Egypt Cup": "Other Leagues",
-    "FA Cup": "Other Leagues",
-    "Copa del Rey": "Other Leagues",
-    "DFB Pokal": "Other Leagues",
-    "US Open Cup": "Other Leagues",
-    "Campeonato Brasileiro Série A": "Other Leagues",
-    "MTN8": "Other Leagues",
-    "King's Cup": "Other Leagues",
-    "AFC Champions League": "Other Leagues"
-}
-
-keywords = list(keyword_categories.keys())
-
-# Get related rising queries
-pytrends.build_payload(keywords, timeframe='now 1-d', geo='')
-related_queries = pytrends.related_queries()
-
-# Group by category
+keyword_categories = {kw: "General" for kw in keywords}
 categorized_trends = {}
-for kw in keywords:
-    category = keyword_categories[kw]
-    if category not in categorized_trends:
-        categorized_trends[category] = []
 
-    if kw in related_queries:
-        rising = related_queries[kw]['rising']
-        if rising is not None:
-            for _, row in rising.iterrows():
-                categorized_trends[category].append({
-                    "topic": row['query'],
-                    "value": row['value'],
-                    "source": kw
-                })
+# Batch helper
+def chunked(iterable, size=5):
+    for i in range(0, len(iterable), size):
+        yield iterable[i:i + size]
 
-# Sort and trim to top 5 per category
-for category in categorized_trends:
-    categorized_trends[category] = sorted(categorized_trends[category], key=lambda x: x['value'], reverse=True)[:5]
+# Collect rising queries
+for batch in chunked(keywords, 5):
+    try:
+        pytrends.build_payload(batch, timeframe='now 1-d', geo='')
+        related = pytrends.related_queries()
+        for kw in batch:
+            cat = keyword_categories.get(kw, "General")
+            if cat not in categorized_trends:
+                categorized_trends[cat] = []
+            if kw in related and related[kw]['rising'] is not None:
+                for _, row in related[kw]['rising'].iterrows():
+                    categorized_trends[cat].append({
+                        "topic": row['query'],
+                        "value": row['value'],
+                        "source": kw
+                    })
+        time.sleep(1)
+    except Exception as e:
+        print(f"Error in batch {batch}: {e}")
 
-# Get interest over time for top global terms
+# Top 5 trends per category
+for cat in categorized_trends:
+    categorized_trends[cat] = sorted(categorized_trends[cat], key=lambda x: x['value'], reverse=True)[:5]
+
+# Interest over time
 highlight_terms = ["Lionel Messi", "Cristiano Ronaldo", "UEFA Champions League", "Copa América"]
 pytrends.build_payload(highlight_terms, timeframe='now 7-d', geo='')
-interest_df = pytrends.interest_over_time().drop(columns='isPartial')
+iot_df = pytrends.interest_over_time().drop(columns='isPartial')
+interest_over_time = {
+    term: iot_df[term].reset_index().to_dict(orient='records') for term in highlight_terms
+}
 
-interest_over_time = {}
-for term in highlight_terms:
-    interest_over_time[term] = interest_df[term].reset_index().to_dict(orient='records')
-
-# Output JSON
-final_output = {
+# Write JSON
+output = {
     "last_updated": datetime.utcnow().isoformat() + "Z",
     "categorized_trends": categorized_trends,
     "interest_over_time": interest_over_time
 }
 
-# Save JSON
 with open("trends.json", "w", encoding="utf-8") as f:
-    json.dump(final_output, f, indent=2)
+    json.dump(output, f, indent=2)
 
-print("✅ trends.json created successfully.")
+print("✅ trends.json updated.")
