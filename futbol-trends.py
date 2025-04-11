@@ -25,7 +25,13 @@ keywords = [
     "US Open Cup", "Campeonato Brasileiro Série A", "MTN8", "King's Cup", "AFC Champions League"
 ]
 
-keyword_categories = {kw: "General" for kw in keywords}
+keyword_categories = {
+    "Lionel Messi": "Global Stars",
+    "Cristiano Ronaldo": "Global Stars",
+    "Kylian Mbappé": "Global Stars",
+    ...
+    "Campeonato Brasileiro Série A": "Americas"
+}
 categorized_trends = {}
 
 def chunked(iterable, size=5):
