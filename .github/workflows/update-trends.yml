@@ -2,9 +2,9 @@ name: Update Trends Data
 
 on:
   schedule:
-    - cron: '0 0 * * *'   # Runs at 00:00 UTC
-    - cron: '0 12 * * *'  # Runs at 12:00 UTC
-  workflow_dispatch:      # Allows manual triggering
+    - cron: '0 0 * * *'   # Every day at 00:00 UTC
+    - cron: '0 12 * * *'  # Every day at 12:00 UTC
+  workflow_dispatch:      # Allows manual trigger
 
 jobs:
   update-trends:
@@ -25,13 +25,12 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Script
-  run: python futbol-trends.py
+        run: python futbol-trends.py
 
       - name: Commit and Push Changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add trends.json
-          git commit -m 'Automated update of trends.json' || echo "No changes to commit"
+          git commit -m "Automated update of trends.json" || echo "No changes to commit"
           git push
-          Add GitHub Actions to update trends.json
