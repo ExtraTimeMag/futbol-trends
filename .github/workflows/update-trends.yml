@@ -27,10 +27,14 @@ jobs:
       - name: Run Script
         run: python futbol-trends.py
 
-      - name: Commit and Push Changes
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add trends.json
-          git commit -m "Automated update of trends.json" || echo "No changes to commit"
-          git push
+    - name: Commit and Push Changes
+  run: |
+    git config --global user.name 'github-actions[bot]'
+    git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+    git add trends.json
+    if git diff --cached --quiet; then
+      echo "No changes to commit"
+    else
+      git commit -m "Automated update of trends.json"
+      git push
+    fi
