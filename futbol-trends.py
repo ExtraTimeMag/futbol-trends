@@ -1,3 +1,4 @@
+
 from pytrends.request import TrendReq
 import pandas as pd
 import json
@@ -6,7 +7,6 @@ import time
 
 pytrends = TrendReq(hl='en-US', tz=0)
 
-# Full keyword list
 keywords = [
     "Lionel Messi", "Cristiano Ronaldo", "Kylian Mbappé", "Erling Haaland",
     "Mohamed Salah", "Vinícius Jr", "Neymar", "Jude Bellingham", "Heung-Min Son",
@@ -28,12 +28,10 @@ keywords = [
 keyword_categories = {kw: "General" for kw in keywords}
 categorized_trends = {}
 
-# Batch helper
 def chunked(iterable, size=5):
     for i in range(0, len(iterable), size):
         yield iterable[i:i + size]
 
-# Collect rising queries
 for batch in chunked(keywords, 5):
     try:
         pytrends.build_payload(batch, timeframe='now 1-d', geo='')
@@ -53,32 +51,16 @@ for batch in chunked(keywords, 5):
     except Exception as e:
         print(f"Error in batch {batch}: {e}")
 
-# Top 5 trends per category
 for cat in categorized_trends:
     categorized_trends[cat] = sorted(categorized_trends[cat], key=lambda x: x['value'], reverse=True)[:5]
 
-highlight_terms = ["Lionel Messi", "Cristiano Ronaldo", "UEFA Champions League", "Copa América"]
-interest_over_time = {}
-
-for term in highlight_terms:
-    try:
-        pytrends.build_payload([term], timeframe='now 7-d', geo='')
-        df = pytrends.interest_over_time()
-        if not df.empty and 'isPartial' in df.columns:
-            df = df.drop(columns='isPartial')
-        interest_over_time[term] = df[term].reset_index().to_dict(orient='records')
-        time.sleep(1)
-    except Exception as e:
-        print(f"Failed to fetch interest over time for {term}: {e}")
-
-# Write JSON
 output = {
     "last_updated": datetime.utcnow().isoformat() + "Z",
     "categorized_trends": categorized_trends,
-    "interest_over_time": interest_over_time
+    "interest_over_time": {}
 }
 
 with open("trends.json", "w", encoding="utf-8") as f:
     json.dump(output, f, indent=2)
 
-print("✅ trends.json updated.")
+print("✅ trends.json updated (charts skipped).")
