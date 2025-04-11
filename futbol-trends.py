@@ -57,13 +57,19 @@ for batch in chunked(keywords, 5):
 for cat in categorized_trends:
     categorized_trends[cat] = sorted(categorized_trends[cat], key=lambda x: x['value'], reverse=True)[:5]
 
-# Interest over time
 highlight_terms = ["Lionel Messi", "Cristiano Ronaldo", "UEFA Champions League", "Copa América"]
-pytrends.build_payload(highlight_terms, timeframe='now 7-d', geo='')
-iot_df = pytrends.interest_over_time().drop(columns='isPartial')
-interest_over_time = {
-    term: iot_df[term].reset_index().to_dict(orient='records') for term in highlight_terms
-}
+interest_over_time = {}
+
+for term in highlight_terms:
+    try:
+        pytrends.build_payload([term], timeframe='now 7-d', geo='')
+        df = pytrends.interest_over_time()
+        if not df.empty and 'isPartial' in df.columns:
+            df = df.drop(columns='isPartial')
+        interest_over_time[term] = df[term].reset_index().to_dict(orient='records')
+        time.sleep(1)
+    except Exception as e:
+        print(f"Failed to fetch interest over time for {term}: {e}")
 
 # Write JSON
 output = {
