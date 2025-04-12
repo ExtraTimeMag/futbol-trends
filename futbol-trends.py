@@ -67,11 +67,30 @@ for batch in chunked(keywords, 5):
 # Limit to top 5 trends per category
 for cat in categorized_trends:
     categorized_trends[cat] = sorted(categorized_trends[cat], key=lambda x: x['value'], reverse=True)[:5]
+    # --- General Global Trends (Non-Curated) ---
+general_keywords = ["Soccer", "Football", "Fútbol"]
+general_trends = []
+
+for keyword in general_keywords:
+    try:
+        pytrends.build_payload([keyword], timeframe='now 1-d', geo='')
+        related = pytrends.related_queries()
+        if keyword in related and related[keyword]['rising'] is not None:
+            for _, row in related[keyword]['rising'].iterrows():
+                general_trends.append({
+                    "topic": row['query'],
+                    "value": row['value'],
+                    "source": keyword
+                })
+        time.sleep(1)
+    except Exception as e:
+        print(f"Error in general keyword {keyword}: {e}")
 
 # Output
 output = {
     "last_updated": datetime.utcnow().isoformat() + "Z",
     "categorized_trends": categorized_trends,
+    "general_trends": sorted(general_trends, key=lambda x: x['value'], reverse=True)[:10],
     "interest_over_time": {}
 }
 
