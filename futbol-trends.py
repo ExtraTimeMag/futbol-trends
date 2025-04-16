@@ -1,4 +1,4 @@
-rom pytrends.request import TrendReq
+from pytrends.request import TrendReq
 import pandas as pd
 import json
 from datetime import datetime
