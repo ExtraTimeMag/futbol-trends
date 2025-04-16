@@ -1,91 +1,127 @@
 {
-  "last_updated": "2025-04-11T20:00:00Z",
+  "last_updated": "2025-04-16T14:18:14.283270Z",
   "categorized_trends": {
     "Global Stars": [
       {
-        "topic": "Messi assist",
-        "value": 420,
+        "topic": "Messi goal",
+        "value": 430,
         "source": "Lionel Messi"
       },
       {
-        "topic": "Ronaldo goal",
-        "value": 395,
-        "source": "Cristiano Ronaldo"
+        "topic": "Haaland brace",
+        "value": 410,
+        "source": "Erling Haaland"
       }
     ],
     "Tournaments": [
       {
-        "topic": "EURO 2024 tickets",
-        "value": 510,
-        "source": "EURO 2024"
-      },
-      {
-        "topic": "Copa Am\u00e9rica final",
-        "value": 480,
-        "source": "Copa Am\u00e9rica"
+        "topic": "Champions League semifinal",
+        "value": 520,
+        "source": "UEFA Champions League"
       }
     ],
     "Africa": [
       {
-        "topic": "Al Ahly win",
-        "value": 310,
+        "topic": "Al Ahly unbeaten",
+        "value": 305,
         "source": "Al Ahly SC"
       }
     ],
-    "Asia": [],
-    "Americas": [],
-    "Europe": []
+    "Europe": [
+      {
+        "topic": "Real Madrid vs Man City",
+        "value": 470,
+        "source": "Real Madrid"
+      }
+    ]
   },
   "general_trends": [
     {
-      "topic": "soccer news",
-      "value": 650,
+      "topic": "soccer results today",
+      "value": 600,
       "source": "Soccer"
     },
     {
-      "topic": "football highlights",
-      "value": 570,
+      "topic": "football news",
+      "value": 560,
       "source": "Football"
     },
     {
       "topic": "f\u00fatbol mundial",
+      "value": 520,
+      "source": "F\u00fatbol"
+    },
+    {
+      "topic": "ucl highlights",
       "value": 490,
-      "source": "F\u00fatbol"
+      "source": "Soccer"
     },
     {
-      "topic": "live soccer games",
+      "topic": "premier league updates",
       "value": 460,
-      "source": "Soccer"
-    },
-    {
-      "topic": "football transfer rumors",
-      "value": 440,
       "source": "Football"
     },
     {
-      "topic": "world cup qualifying",
-      "value": 410,
+      "topic": "champions league scores",
+      "value": 430,
       "source": "Soccer"
     },
     {
-      "topic": "la liga match",
-      "value": 385,
+      "topic": "serie a fixtures",
+      "value": 400,
       "source": "F\u00fatbol"
     },
     {
-      "topic": "soccer injury update",
-      "value": 360,
+      "topic": "la liga table",
+      "value": 390,
       "source": "Soccer"
     },
     {
-      "topic": "football legends",
-      "value": 330,
+      "topic": "football injuries",
+      "value": 370,
       "source": "Football"
     },
     {
-      "topic": "f\u00fatbol femenino",
-      "value": 300,
+      "topic": "live f\u00fatbol commentary",
+      "value": 350,
       "source": "F\u00fatbol"
+    }
+  ],
+  "whoscored_trends": [
+    {
+      "team": "Manchester City",
+      "league": "Premier League",
+      "trend": "5-game winning streak, dominant form"
+    },
+    {
+      "team": "Bayern Munich",
+      "league": "Bundesliga",
+      "trend": "Unbeaten in last 7 matches, strong away record"
+    },
+    {
+      "team": "Paris Saint-Germain",
+      "league": "Ligue 1",
+      "trend": "Leading the league with highest goal difference"
+    },
+    {
+      "player": "Lionel Messi",
+      "league": "MLS",
+      "trend": "Avg rating 8.5 in last 5 matches"
+    },
+    {
+      "player": "Erling Haaland",
+      "league": "Premier League",
+      "trend": "Scoring in 6 consecutive appearances"
+    },
+    {
+      "match": "Real Madrid vs Barcelona",
+      "competition": "La Liga",
+      "trend": "Both teams in top form ahead of El Cl\u00e1sico"
+    },
+    {
+      "match": "Inter Milan vs AC Milan",
+      "competition": "Serie A",
+      "trend": "Derby approaching with title race impact"
     }
   ],
   "interest_over_time": {}
