@@ -1,4 +1,4 @@
-from pytrends.request import TrendReq
+rom pytrends.request import TrendReq
 import pandas as pd
 import json
 from datetime import datetime
@@ -9,29 +9,13 @@ from bs4 import BeautifulSoup
 
 pytrends = TrendReq(hl='en-US', tz=0)
 
+# Your curated keyword map...
+# [Shortened for brevity — keep same as before]
 keyword_categories = {
     "Lionel Messi": "Global Stars", "Cristiano Ronaldo": "Global Stars", "Kylian Mbappé": "Global Stars",
-    "Erling Haaland": "Global Stars", "Mohamed Salah": "Global Stars", "Vinícius Jr": "Global Stars",
-    "Neymar": "Global Stars", "Jude Bellingham": "Global Stars", "Heung-Min Son": "Global Stars",
-    "UEFA Champions League": "Tournaments", "Europa League": "Tournaments", "Conference League": "Tournaments",
-    "FIFA World Cup": "Tournaments", "Women's World Cup": "Tournaments",
-    "Club World Cup": "Tournaments", "Copa América": "Tournaments", "AFCON": "Tournaments",
-    "Asian Cup": "Tournaments", "Gold Cup": "Tournaments", "CAF Champions League": "Tournaments",
-    "Copa Libertadores": "Tournaments", "Copa Sudamericana": "Tournaments", "AFC Champions League": "Tournaments",
-    "Al Ahly SC": "Africa", "Zamalek SC": "Africa", "Wydad Casablanca": "Africa", "Esperance de Tunis": "Africa",
-    "Mamelodi Sundowns": "Africa", "TP Mazembe": "Africa", "Egypt Cup": "Africa", "MTN8": "Africa",
-    "Al Hilal": "Asia", "Al Nassr": "Asia", "Urawa Red Diamonds": "Asia", "Kawasaki Frontale": "Asia",
-    "Melbourne Victory": "Asia", "J1 League": "Asia", "K League": "Asia", "Indian Super League": "Asia",
-    "Saudi Pro League": "Asia", "King's Cup": "Asia",
-    "Real Madrid": "Europe", "FC Barcelona": "Europe", "Manchester United": "Europe", "Manchester City": "Europe",
-    "Liverpool FC": "Europe", "Arsenal": "Europe", "Bayern Munich": "Europe", "Juventus": "Europe",
-    "Inter Milan": "Europe", "Paris Saint-Germain": "Europe", "Premier League": "Europe", "La Liga": "Europe",
-    "Serie A": "Europe", "Bundesliga": "Europe", "Ligue 1": "Europe", "Eredivisie": "Europe", "Copa del Rey": "Europe",
-    "DFB Pokal": "Europe", "FA Cup": "Europe",
-    "MLS": "Americas", "Liga MX": "Americas", "Boca Juniors": "Americas", "River Plate": "Americas",
-    "Flamengo": "Americas", "Corinthians": "Americas", "Palmeiras": "Americas", "Club América": "Americas",
-    "Seattle Sounders": "Americas", "Atlanta United": "Americas", "US Open Cup": "Americas",
-    "Campeonato Brasileiro Série A": "Americas"
+    "UEFA Champions League": "Tournaments", "FIFA World Cup": "Tournaments",
+    "Al Ahly SC": "Africa", "Al Hilal": "Asia", "Real Madrid": "Europe", "MLS": "Americas"
+    # Add rest here from your previous script
 }
 
 keywords = list(keyword_categories.keys())
@@ -41,7 +25,7 @@ def chunked(iterable, size=5):
     for i in range(0, len(iterable), size):
         yield iterable[i:i + size]
 
-# Curated Google Trends
+# Curated Trends
 for batch in chunked(keywords, 5):
     try:
         pytrends.build_payload(batch, timeframe='now 1-d', geo='')
@@ -64,7 +48,7 @@ for batch in chunked(keywords, 5):
 for cat in categorized_trends:
     categorized_trends[cat] = sorted(categorized_trends[cat], key=lambda x: x['value'], reverse=True)[:10]
 
-# General global fútbol trends
+# General Trends
 general_keywords = ["Soccer", "Football", "Fútbol"]
 general_trends = []
 
@@ -83,11 +67,11 @@ for keyword in general_keywords:
     except Exception as e:
         print(f"Error in general keyword {keyword}: {e}")
 
-# Scrape Forebet Trends
+# Forebet Trends with fail-safe
 forebet_trends = []
 try:
     url = "https://www.forebet.com/en/trends/top"
-    response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
+    response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=10)
     soup = BeautifulSoup(response.text, 'html.parser')
     trend_boxes = soup.select('.trendsBody .trendRow')
 
@@ -103,9 +87,10 @@ try:
         })
 
 except Exception as e:
-    print(f"Error scraping Forebet trends: {e}")
+    print("⚠️ Forebet scraping failed:", str(e))
+    forebet_trends = []
 
-# Final output
+# Output
 output = {
     "last_updated": datetime.utcnow().isoformat() + "Z",
     "categorized_trends": categorized_trends,
@@ -117,4 +102,4 @@ output = {
 with open("trends.json", "w", encoding="utf-8") as f:
     json.dump(output, f, indent=2)
 
-print("✅ trends.json updated with curated, general, and Forebet trends.")
+print("✅ trends.json updated (safe version).")
