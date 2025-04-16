@@ -1,4 +1,3 @@
-
 from pytrends.request import TrendReq
 import pandas as pd
 import json
@@ -7,7 +6,7 @@ import time
 
 pytrends = TrendReq(hl='en-US', tz=0)
 
-# Keyword to category mapping
+# Keyword → category mapping
 keyword_categories = {
     "Lionel Messi": "Global Stars", "Cristiano Ronaldo": "Global Stars", "Kylian Mbappé": "Global Stars",
     "Erling Haaland": "Global Stars", "Mohamed Salah": "Global Stars", "Vinícius Jr": "Global Stars",
@@ -45,6 +44,7 @@ def chunked(iterable, size=5):
     for i in range(0, len(iterable), size):
         yield iterable[i:i + size]
 
+# Curated trends
 for batch in chunked(keywords, 5):
     try:
         pytrends.build_payload(batch, timeframe='now 1-d', geo='')
@@ -64,10 +64,10 @@ for batch in chunked(keywords, 5):
     except Exception as e:
         print(f"Error in batch {batch}: {e}")
 
-# Limit to top 5 trends per category
 for cat in categorized_trends:
     categorized_trends[cat] = sorted(categorized_trends[cat], key=lambda x: x['value'], reverse=True)[:5]
-    # --- General Global Trends (Non-Curated) ---
+
+# General global fútbol trends
 general_keywords = ["Soccer", "Football", "Fútbol"]
 general_trends = []
 
@@ -86,7 +86,7 @@ for keyword in general_keywords:
     except Exception as e:
         print(f"Error in general keyword {keyword}: {e}")
 
-# Output
+# Output JSON
 output = {
     "last_updated": datetime.utcnow().isoformat() + "Z",
     "categorized_trends": categorized_trends,
@@ -97,4 +97,4 @@ output = {
 with open("trends.json", "w", encoding="utf-8") as f:
     json.dump(output, f, indent=2)
 
-print("✅ trends.json updated (real categories, no charts).")
+print("✅ trends.json updated with curated + general trends.")
