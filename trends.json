@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-10T14:00:00Z",
+  "last_updated": "2025-04-11T20:00:00Z",
   "categorized_trends": {
     "Global Stars": [
       {
@@ -8,21 +8,21 @@
         "source": "Lionel Messi"
       },
       {
-        "topic": "Cristiano Ronaldo hat trick",
+        "topic": "Ronaldo goal",
         "value": 395,
         "source": "Cristiano Ronaldo"
       }
     ],
     "Tournaments": [
       {
-        "topic": "Copa Am\u00e9rica final",
+        "topic": "EURO 2024 tickets",
         "value": 510,
-        "source": "Copa Am\u00e9rica"
+        "source": "EURO 2024"
       },
       {
-        "topic": "EURO 2024 tickets",
+        "topic": "Copa Am\u00e9rica final",
         "value": 480,
-        "source": "EURO 2024"
+        "source": "Copa Am\u00e9rica"
       }
     ],
     "Africa": [
@@ -31,28 +31,62 @@
         "value": 310,
         "source": "Al Ahly SC"
       }
-    ]
-  },
-  "interest_over_time": {
-    "Lionel Messi": [
-      {
-        "date": "2025-04-03T00:00:00",
-        "Lionel Messi": 55
-      },
-      {
-        "date": "2025-04-04T00:00:00",
-        "Lionel Messi": 72
-      }
     ],
-    "Cristiano Ronaldo": [
-      {
-        "date": "2025-04-03T00:00:00",
-        "Cristiano Ronaldo": 60
-      },
-      {
-        "date": "2025-04-04T00:00:00",
-        "Cristiano Ronaldo": 68
-      }
-    ]
-  }
+    "Asia": [],
+    "Americas": [],
+    "Europe": []
+  },
+  "general_trends": [
+    {
+      "topic": "soccer news",
+      "value": 650,
+      "source": "Soccer"
+    },
+    {
+      "topic": "football highlights",
+      "value": 570,
+      "source": "Football"
+    },
+    {
+      "topic": "f\u00fatbol mundial",
+      "value": 490,
+      "source": "F\u00fatbol"
+    },
+    {
+      "topic": "live soccer games",
+      "value": 460,
+      "source": "Soccer"
+    },
+    {
+      "topic": "football transfer rumors",
+      "value": 440,
+      "source": "Football"
+    },
+    {
+      "topic": "world cup qualifying",
+      "value": 410,
+      "source": "Soccer"
+    },
+    {
+      "topic": "la liga match",
+      "value": 385,
+      "source": "F\u00fatbol"
+    },
+    {
+      "topic": "soccer injury update",
+      "value": 360,
+      "source": "Soccer"
+    },
+    {
+      "topic": "football legends",
+      "value": 330,
+      "source": "Football"
+    },
+    {
+      "topic": "f\u00fatbol femenino",
+      "value": 300,
+      "source": "F\u00fatbol"
+    }
+  ],
+  "interest_over_time": {}
 }
