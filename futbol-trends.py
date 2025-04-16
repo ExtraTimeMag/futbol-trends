@@ -4,6 +4,8 @@ import json
 from datetime import datetime
 import time
 import random
+import requests
+from bs4 import BeautifulSoup
 
 pytrends = TrendReq(hl='en-US', tz=0)
 
@@ -12,7 +14,7 @@ keyword_categories = {
     "Erling Haaland": "Global Stars", "Mohamed Salah": "Global Stars", "Vinícius Jr": "Global Stars",
     "Neymar": "Global Stars", "Jude Bellingham": "Global Stars", "Heung-Min Son": "Global Stars",
     "UEFA Champions League": "Tournaments", "Europa League": "Tournaments", "Conference League": "Tournaments",
-    "EURO 2024": "Tournaments", "FIFA World Cup": "Tournaments", "Women's World Cup": "Tournaments",
+    "FIFA World Cup": "Tournaments", "Women's World Cup": "Tournaments",
     "Club World Cup": "Tournaments", "Copa América": "Tournaments", "AFCON": "Tournaments",
     "Asian Cup": "Tournaments", "Gold Cup": "Tournaments", "CAF Champions League": "Tournaments",
     "Copa Libertadores": "Tournaments", "Copa Sudamericana": "Tournaments", "AFC Champions League": "Tournaments",
@@ -39,6 +41,7 @@ def chunked(iterable, size=5):
     for i in range(0, len(iterable), size):
         yield iterable[i:i + size]
 
+# Curated Google Trends
 for batch in chunked(keywords, 5):
     try:
         pytrends.build_payload(batch, timeframe='now 1-d', geo='')
@@ -54,14 +57,14 @@ for batch in chunked(keywords, 5):
                         "value": row['value'],
                         "source": kw
                     })
-        time.sleep(random.uniform(1, 3))  # Random sleep between 1–3 seconds
+        time.sleep(random.uniform(1, 3))
     except Exception as e:
         print(f"Error in batch {batch}: {e}")
 
 for cat in categorized_trends:
     categorized_trends[cat] = sorted(categorized_trends[cat], key=lambda x: x['value'], reverse=True)[:10]
 
-# General fútbol trends
+# General global fútbol trends
 general_keywords = ["Soccer", "Football", "Fútbol"]
 general_trends = []
 
@@ -76,18 +79,42 @@ for keyword in general_keywords:
                     "value": row['value'],
                     "source": keyword
                 })
-        time.sleep(random.uniform(1, 3))  # Random sleep between 1–3 seconds
+        time.sleep(random.uniform(1, 3))
     except Exception as e:
         print(f"Error in general keyword {keyword}: {e}")
 
+# Scrape Forebet Trends
+forebet_trends = []
+try:
+    url = "https://www.forebet.com/en/trends/top"
+    response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
+    soup = BeautifulSoup(response.text, 'html.parser')
+    trend_boxes = soup.select('.trendsBody .trendRow')
+
+    for box in trend_boxes[:10]:
+        team = box.select_one(".trendTeamName").get_text(strip=True) if box.select_one(".trendTeamName") else "Unknown Team"
+        trend_text = box.select_one(".trendsStatText").get_text(strip=True) if box.select_one(".trendsStatText") else "No trend text"
+        league = box.select_one(".trendTeamLeague").get_text(strip=True) if box.select_one(".trendTeamLeague") else "Unknown League"
+
+        forebet_trends.append({
+            "team": team,
+            "league": league,
+            "trend": trend_text
+        })
+
+except Exception as e:
+    print(f"Error scraping Forebet trends: {e}")
+
+# Final output
 output = {
     "last_updated": datetime.utcnow().isoformat() + "Z",
     "categorized_trends": categorized_trends,
     "general_trends": sorted(general_trends, key=lambda x: x['value'], reverse=True)[:10],
+    "forebet_trends": forebet_trends,
     "interest_over_time": {}
 }
 
 with open("trends.json", "w", encoding="utf-8") as f:
     json.dump(output, f, indent=2)
 
-print("✅ trends.json updated with top 10 and randomized sleep.")
+print("✅ trends.json updated with curated, general, and Forebet trends.")
