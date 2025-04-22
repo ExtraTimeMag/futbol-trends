@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-16T14:18:14.283270Z",
+  "last_updated": "2025-04-22T17:46:55.570269Z",
   "categorized_trends": {
     "Global Stars": [
       {
@@ -29,9 +29,7 @@
     ],
     "Europe": [
       {
-        "topic": "Real Madrid vs Man City",
-        "value": 470,
-        "source": "Real Madrid"
+    
       }
     ]
   },
@@ -122,6 +120,41 @@
       "match": "Inter Milan vs AC Milan",
       "competition": "Serie A",
       "trend": "Derby approaching with title race impact"
+    },
+    {
+      "team": "Paris Saint-Germain",
+      "league": "Ligue 1",
+      "trend": "Won their last 10 matches"
+    },
+    {
+      "team": "Barcelona",
+      "league": "LaLiga",
+      "trend": "Won 11 of their last 12 matches"
+    },
+    {
+      "match": "Manchester City vs Aston Villa",
+      "competition": "All Competitions",
+      "trend": "Manchester City have won their last 9 home matches vs Aston Villa"
+    },
+    {
+      "match": "Borussia Dortmund vs Barcelona",
+      "competition": "Champions League",
+      "trend": "Borussia Dortmund won 3\u20131"
+    },
+    {
+      "match": "Aston Villa vs Paris Saint-Germain",
+      "competition": "Champions League",
+      "trend": "Aston Villa won 3\u20132"
+    },
+    {
+      "match": "Real Madrid vs Arsenal",
+      "competition": "Champions League",
+      "trend": "Arsenal won 2\u20131"
+    },
+    {
+      "match": "Inter vs Bayern Munich",
+      "competition": "Champions League",
+      "trend": "Match ended 2\u20132"
     }
   ],
   "interest_over_time": {}
