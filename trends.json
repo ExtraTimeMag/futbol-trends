@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-22T17:46:55.570269Z",
+  "last_updated": "2025-04-27T13:15:07.296153Z",
   "categorized_trends": {
     "Global Stars": [
       {
@@ -29,7 +29,9 @@
     ],
     "Europe": [
       {
-    
+        "topic": "Real Madrid vs Man City",
+        "value": 470,
+        "source": "Real Madrid"
       }
     ]
   },
@@ -85,7 +87,7 @@
       "source": "F\u00fatbol"
     }
   ],
-  "whoscored_trends": [
+  "whoscored_trends_men": [
     {
       "team": "Manchester City",
       "league": "Premier League",
@@ -119,22 +121,7 @@
     {
       "match": "Inter Milan vs AC Milan",
       "competition": "Serie A",
-      "trend": "Derby approaching with title race impact"
-    },
-    {
-      "team": "Paris Saint-Germain",
-      "league": "Ligue 1",
-      "trend": "Won their last 10 matches"
-    },
-    {
-      "team": "Barcelona",
-      "league": "LaLiga",
-      "trend": "Won 11 of their last 12 matches"
-    },
-    {
-      "match": "Manchester City vs Aston Villa",
-      "competition": "All Competitions",
-      "trend": "Manchester City have won their last 9 home matches vs Aston Villa"
+      "trend": "AC Milan won 3\u20130 in Milan derby"
     },
     {
       "match": "Borussia Dortmund vs Barcelona",
@@ -155,6 +142,78 @@
       "match": "Inter vs Bayern Munich",
       "competition": "Champions League",
       "trend": "Match ended 2\u20132"
+    },
+    {
+      "match": "Barcelona vs Real Madrid",
+      "competition": "Copa del Rey Final",
+      "trend": "Barcelona won 3\u20132"
+    }
+  ],
+  "whoscored_trends_women": [
+    {
+      "player": "Debinha",
+      "league": "NWSL",
+      "trend": "Leading MVP race with 16 chances created for Kansas City Current"
+    },
+    {
+      "player": "Temwa Chawinga",
+      "league": "NWSL",
+      "trend": "Tied for Golden Boot lead with 3 goals"
+    },
+    {
+      "player": "Delphine Cascarino",
+      "league": "NWSL",
+      "trend": "2 goals and 3 assists for San Diego Wave"
+    },
+    {
+      "team": "Kansas City Current",
+      "league": "NWSL",
+      "trend": "Unbeaten and top of the league"
+    },
+    {
+      "team": "Chelsea Women",
+      "league": "FA WSL",
+      "trend": "Top of WSL after beating Manchester United 3\u20131"
+    },
+    {
+      "player": "Lauren James",
+      "league": "FA WSL",
+      "trend": "Scored 12th goal of the season for Chelsea"
+    },
+    {
+      "team": "Barcelona Femeni",
+      "league": "Liga F",
+      "trend": "Won 23 consecutive league games"
+    },
+    {
+      "player": "Aitana Bonmat\u00ed",
+      "league": "Liga F",
+      "trend": "Named Liga F Player of the Month"
+    },
+    {
+      "team": "VfL Wolfsburg Women",
+      "league": "Frauen-Bundesliga",
+      "trend": "Unbeaten in last 10 matches"
+    },
+    {
+      "player": "Ewa Pajor",
+      "league": "Frauen-Bundesliga",
+      "trend": "Top scorer with 16 goals this season"
+    },
+    {
+      "team": "Lyon Women",
+      "league": "D1 Arkema",
+      "trend": "Secured another domestic title"
+    },
+    {
+      "player": "Ada Hegerberg",
+      "league": "D1 Arkema",
+      "trend": "Returned from injury with back-to-back goals"
+    },
+    {
+      "match": "Barcelona Femeni vs Chelsea Women",
+      "competition": "UWCL Semifinal",
+      "trend": "Barcelona advanced to the UWCL final after 2\u20131 aggregate win"
     }
   ],
   "interest_over_time": {}
